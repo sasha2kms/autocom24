@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Автоматизация коммуникаций | Партнер TWIN</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNjQiIHZpZXdCb3g9IjAgMCA2NCA2NCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iOCIgZmlsbD0iIzM0OThkYiIvPgo8cGF0aCBkPSJNMTYgMTZIMzJWNDhIMTZWNjRINDhWNDhWMzJWNjRWNjhIMTZWNjRWNDhWMTZaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMzIgMTZINDhWMzJIMzJWMTZaIiBmaWxsPSIjZWNmMGYxIi8+Cjwvc3ZnPgo=">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Базовые стили и сброс */
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #1a2530;
+            --text-color: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Блок: Header */
+        .header {
+            background-color: var(--primary-color);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header__inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .header__logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--light-color);
+            text-decoration: none;
+        }
+
+        .header__nav {
+            display: flex;
+        }
+
+        .header__nav-list {
+            display: flex;
+            list-style: none;
+        }
+
+        .header__nav-item {
+            margin-left: 30px;
+        }
+
+        .header__nav-link {
+            color: var(--light-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .header__nav-link:hover {
+            color: var(--accent-color);
+        }
+
+        .header__button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .header__button:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        /* Блок: Hero */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--dark-color) 100%);
+            color: var(--light-color);
+            padding: 180px 0 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero__background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(52, 152, 219, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(41, 128, 185, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(52, 152, 219, 0.2) 0%, transparent 50%);
+            z-index: 0;
+            animation: backgroundZoom 15s infinite alternate ease-in-out;
+        }
+
+        .hero__content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero__title {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        .hero__subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s 0.3s forwards;
+        }
+
+        .hero__button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s 0.6s forwards;
+        }
+
+        .hero__button:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes backgroundZoom {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Блок: About */
+        .about {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+
+        .about__title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+        }
+
+        .about__content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .about__text {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .about__paragraph {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .about__image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .about__image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .about__image:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Блок: Products */
+        .products {
+            padding: 100px 0;
+            background-color: white;
+        }
+
+        .products__title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+        }
+
+        .products__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .product-card__image {
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .product-card__image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-card__image img {
+            transform: scale(1.1);
+        }
+
+        .product-card__content {
+            padding: 25px;
+        }
+
+        .product-card__title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+
+        .product-card__description {
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .product-card__features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .product-card__feature {
+            padding: 5px 0;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .product-card__feature::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        .product-card__button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .product-card__button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Блок: Contact */
+        .contact {
+            padding: 100px 0;
+            background-color: var(--light-color);
+        }
+
+        .contact__title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-color);
+        }
+
+        .contact__form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .form__group {
+            margin-bottom: 20px;
+        }
+
+        .form__label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form__input, .form__textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form__input:focus, .form__textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .form__textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form__button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .form__button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Блок: Footer */
+        .footer {
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            padding: 60px 0 30px;
+        }
+
+        .footer__content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer__section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer__title {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        .footer__text {
+            margin-bottom: 15px;
+        }
+
+        .footer__links {
+            list-style: none;
+        }
+
+        .footer__link-item {
+            margin-bottom: 10px;
+        }
+
+        .footer__link {
+            color: var(--light-color);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .footer__link:hover {
+            color: var(--accent-color);
+        }
+
+        .footer__social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer__social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--light-color);
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .footer__social-link:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer__bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal__content {
+            background-color: white;
+            border-radius: 8px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .modal__header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .modal__title {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .modal__close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal__close:hover {
+            color: var(--accent-color);
+        }
+
+        .modal__body {
+            padding: 30px;
+        }
+
+        .modal__section {
+            margin-bottom: 25px;
+        }
+
+        .modal__section-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 5px;
+        }
+
+        .modal__text {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .modal__list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .modal__list-item {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .modal__list-item::before {
+            content: '•';
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .modal__highlight {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .header__nav {
+                display: none;
+            }
+            
+            .hero__title {
+                font-size: 2.5rem;
+            }
+            
+            .hero__subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .about__title, .products__title, .contact__title {
+                font-size: 2rem;
+            }
+
+            .modal__content {
+                max-width: 95%;
+            }
+        }
+
+        /* Анимации при скролле */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка сайта -->
+    <header class="header">
+        <div class="container">
+            <div class="header__inner">
+                <a href="#" class="header__logo">AutoCom</a>
+                <nav class="header__nav">
+                    <ul class="header__nav-list">
+                        <li class="header__nav-item"><a href="#about" class="header__nav-link">О компании</a></li>
+                        <li class="header__nav-item"><a href="#products" class="header__nav-link">Продукты</a></li>
+                        <li class="header__nav-item"><a href="#contact" class="header__nav-link">Контакты</a></li>
+                    </ul>
+                </nav>
+                <a href="#contact" class="header__button">Связаться с нами</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Герой-секция -->
+    <section class="hero">
+        <div class="hero__background"></div>
+        <div class="container">
+            <div class="hero__content">
+                <h1 class="hero__title">Автоматизация бизнес-коммуникаций</h1>
+                <p class="hero__subtitle">Решения для эффективного взаимодействия с клиентами</p>
+                <button class="hero__button" id="hero-modal-btn">Узнать больше</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- О компании -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="about__title fade-in">О компании</h2>
+            <div class="about__content">
+                <div class="about__text">
+                    <p class="about__paragraph">Мы — официальный партнер компании TWIN, предлагающий передовые решения в области автоматизации бизнес-коммуникаций. Наша миссия — помочь компаниям повысить эффективность взаимодействия с клиентами и сократить операционные расходы.</p>
+                    <p class="about__paragraph">С 2019 года мы успешно внедряем решения для автоматизации процессов в различных отраслях, помогая нашим клиентам достигать новых высот в обслуживании клиентов.</p>
+                    <p class="about__paragraph">Наша команда состоит из опытных специалистов, которые постоянно совершенствуют свои знания и навыки, чтобы предлагать только самые современные и эффективные решения.</p>
+                </div>
+                <div class="about__image fade-in">
+                    <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 800 600'%3E%3Crect fill='%232c3e50' width='800' height='600'/%3E%3Cg fill='%233498db' opacity='0.8'%3E%3Ccircle cx='400' cy='300' r='100'/%3E%3Ccircle cx='200' cy='150' r='50'/%3E%3Ccircle cx='600' cy='450' r='50'/%3E%3C/g%3E%3C/svg%3E" alt="О компании">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Продукты -->
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="products__title fade-in">Наши продукты</h2>
+            <div class="products__grid">
+                <!-- Продукт 1 -->
+                <div class="product-card fade-in">
+                    <div class="product-card__image">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 800 400'%3E%3Crect fill='%232c3e50' width='800' height='400'/%3E%3Cpath fill='%233498db' d='M400,200 L600,100 L600,300 Z'/%3E%3C/svg%3E" alt="Голосовой бот">
+                    </div>
+                    <div class="product-card__content">
+                        <h3 class="product-card__title">Голосовой бот</h3>
+                        <p class="product-card__description">Автоматизированный обзвон клиентов с технологией распознавания речи и эмоций.</p>
+                        <ul class="product-card__features">
+                            <li class="product-card__feature">Распознавание речи в шуме</li>
+                            <li class="product-card__feature">Понимание эмоций</li>
+                            <li class="product-card__feature">Одновременные тысячи звонков</li>
+                            <li class="product-card__feature">Самообучение</li>
+                        </ul>
+                        <button class="product-card__button" data-modal="voicebot">Подробнее</button>
+                    </div>
+                </div>
+
+                <!-- Продукт 2 -->
+                <div class="product-card fade-in">
+                    <div class="product-card__image">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 800 400'%3E%3Crect fill='%232c3e50' width='800' height='400'/%3E%3Ccircle fill='%233498db' cx='200' cy='200' r='80'/%3E%3Ccircle fill='%233498db' cx='400' cy='200' r='80'/%3E%3Ccircle fill='%233498db' cx='600' cy='200' r='80'/%3E%3C/svg%3E" alt="Чат-бот">
+                    </div>
+                    <div class="product-card__content">
+                        <h3 class="product-card__title">Чат-бот</h3>
+                        <p class="product-card__description">Умный бот для общения в мессенджерах и на сайтах с поддержкой естественного языка.</p>
+                        <ul class="product-card__features">
+                            <li class="product-card__feature">Работа в популярных мессенджерах</li>
+                            <li class="product-card__feature">Понимание контекста и намерений</li>
+                            <li class="product-card__feature">Обмен файлами</li>
+                            <li class="product-card__feature">Многоязычная поддержка</li>
+                        </ul>
+                        <button class="product-card__button" data-modal="chatbot">Подробнее</button>
+                    </div>
+                </div>
+
+                <!-- Продукт 3 -->
+                <div class="product-card fade-in">
+                    <div class="product-card__image">
+                        <img src="data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='200' viewBox='0 0 800 400'%3E%3Crect fill='%232c3e50' width='800' height='400'/%3E%3Crect fill='%233498db' x='200' y='100' width='400' height='200' rx='20'/%3E%3C/svg%3E" alt="Рассылка сообщений">
+                    </div>
+                    <div class="product-card__content">
+                        <h3 class="product-card__title">Рассылка сообщений</h3>
+                        <p class="product-card__description">Массовые рассылки по различным каналам связи с персонализацией контента.</p>
+                        <ul class="product-card__features">
+                            <li class="product-card__feature">Рассылка по всем каналам</li>
+                            <li class="product-card__feature">Персонализация контента</li>
+                            <li class="product-card__feature">Аналитика эффективности</li>
+                            <li class="product-card__feature">Автоматическое сегментирование</li>
+                        </ul>
+                        <button class="product-card__button" data-modal="massage">Подробнее</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Форма обратной связи -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="contact__title fade-in">Свяжитесь с нами</h2>
+            <div class="contact__form fade-in">
+                <form id="contact-form">
+                    <div class="form__group">
+                        <label for="name" class="form__label">Ваше имя</label>
+                        <input type="text" id="name" class="form__input" required>
+                    </div>
+                    <div class="form__group">
+                        <label for="email" class="form__label">Email</label>
+                        <input type="email" id="email" class="form__input" required>
+                    </div>
+                    <div class="form__group">
+                        <label for="phone" class="form__label">Телефон</label>
+                        <input type="tel" id="phone" class="form__input">
+                    </div>
+                    <div class="form__group">
+                        <label for="message" class="form__label">Сообщение</label>
+                        <textarea id="message" class="form__textarea" required></textarea>
+                    </div>
+                    <button type="submit" class="form__button">Отправить</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__section">
+                    <h3 class="footer__title">AutoCom</h3>
+                    <p class="footer__text">Официальный партнер компании TWIN. Решения для автоматизации бизнес-коммуникаций.</p>
+                    <div class="footer__social">
+                        <a class="footer__social-link" data-modal="whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a class="footer__social-link" data-modal="telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a class="footer__social-link" data-modal="vk">
+                            <i class="fab fa-vk"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title">Контакты</h3>
+                    <p class="footer__text footer__link" data-modal="email">Email: sasha2kms@mail.ru</p>
+                    <p class="footer__text footer__link" data-modal="phone">Телефон: 8-918 650 07 96</p>
+                    <p class="footer__text footer__link" data-modal="address">Адрес: г. Краснодар, ул Криничная 173</p>
+                </div>
+                <div class="footer__section">
+                    <h3 class="footer__title">Продукты</h3>
+                    <ul class="footer__links">
+                        <li class="footer__link-item"><a class="footer__link" data-modal="voicebot">Голосовой бот</a></li>
+                        <li class="footer__link-item"><a class="footer__link" data-modal="chatbot">Чат-бот</a></li>
+                        <li class="footer__link-item"><a class="footer__link" data-modal="massage">Рассылка сообщений</a></li>
+                        <li class="footer__link-item"><a class="footer__link" data-modal="site">Виджет для сайта</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <p>&copy; 2023 AutoCom. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальные окна -->
+    
+    <!-- Модальное окно для Hero секции -->
+    <div class="modal" id="hero-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2 class="modal__title">О компании AutoCom</h2>
+                <button class="modal__close">&times;</button>
+            </div>
+            <div class="modal__body">
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Наша миссия</h3>
+                    <p class="modal__text">Мы являемся официальным партнером компании TWIN и предлагаем современные решения для автоматизации бизнес-коммуникаций. Наша цель — помочь компаниям повысить эффективность взаимодействия с клиентами и сократить операционные расходы.</p>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Преимущества работы с нами</h3>
+                    <ul class="modal__list">
+                        <li class="modal__list-item">Участник проекта Сколково с 2019 года</li>
+                        <li class="modal__list-item">Аккредитованная ИТ-организация</li>
+                        <li class="modal__list-item">В реестре отечественного ПО № 11009</li>
+                        <li class="modal__list-item">В реестре операторов, осуществляющих обработку персональных данных</li>
+                        <li class="modal__list-item">5 изобретений, защищенных патентом</li>
+                    </ul>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Наши достижения</h3>
+                    <div class="modal__highlight">
+                        <p class="modal__text">Лучшее технологическое внедрение/решение в страховой компании 2019г.</p>
+                        <p class="modal__text">№8 в рейтинге 100 самых успешных российских стартапов 2021 года Inc. Russia в AI</p>
+                        <p class="modal__text">Победитель в номинации «Подбор без границ»</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для Голосового бота -->
+    <div class="modal" id="voicebot-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2 class="modal__title">Голосовой бот</h2>
+                <button class="modal__close">&times;</button>
+            </div>
+            <div class="modal__body">
+                <div class="modal__section">
+                    <h3 class="modal__section-title">TWIN.VoiceBot</h3>
+                    <p class="modal__text">Автообзвон роботом: говорит как человек, понимает эмоции, обучается, распознаёт речь в шуме и ведёт тысячи звонков сразу.</p>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Ключевые возможности</h3>
+                    <ul class="modal__list">
+                        <li class="modal__list-item">Естественное общение как у человека</li>
+                        <li class="modal__list-item">Распознавание и понимание эмоций</li>
+                        <li class="modal__list-item">Самообучение в процессе работы</li>
+                        <li class="modal__list-item">Распознавание речи даже в шумной обстановке</li>
+                        <li class="modal__list-item">Одновременное ведение тысяч звонков</li>
+                    </ul>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Сферы применения</h3>
+                    <div class="modal__highlight">
+                        <p class="modal__text"><strong>Информирование:</strong> Университеты, IT-компании</p>
+                        <p class="modal__text"><strong>Лидогенерация:</strong> Франчайзинг, брокерские услуги</p>
+                        <p class="modal__text"><strong>Напоминания:</strong> Фитнес-клубы, автосервисы</p>
+                        <p class="modal__text"><strong>Оповещения:</strong> Транспортные компании, ЖКХ</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для Чат-бота -->
+    <div class="modal" id="chatbot-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2 class="modal__title">Чат-бот</h2>
+                <button class="modal__close">&times;</button>
+            </div>
+            <div class="modal__body">
+                <div class="modal__section">
+                    <h3 class="modal__section-title">TWIN.ChatBot</h3>
+                    <p class="modal__text">Общается на естественном языке, работает в разных мессенджерах, понимает намерения и контекст, может обмениваться файлами.</p>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Преимущества</h3>
+                    <ul class="modal__list">
+                        <li class="modal__list-item">Работа в популярных мессенджерах</li>
+                        <li class="modal__list-item">Понимание контекста и намерений пользователя</li>
+                        <li class="modal__list-item">Возможность обмена файлами</li>
+                        <li class="modal__list-item">Многоязычная поддержка</li>
+                        <li class="modal__list-item">Интеграция с CRM-системами</li>
+                    </ul>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Варианты использования</h3>
+                    <div class="modal__highlight">
+                        <p class="modal__text">Чат-бот на сайте с поддержкой ИИ</p>
+                        <p class="modal__text">Чат-бот с ИИ в Telegram</p>
+                        <p class="modal__text">Автоматизация поддержки клиентов</p>
+                        <p class="modal__text">Продажа услуг прямо в чате</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для Рассылки сообщений -->
+    <div class="modal" id="massage-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2 class="modal__title">Рассылка сообщений</h2>
+                <button class="modal__close">&times;</button>
+            </div>
+            <div class="modal__body">
+                <div class="modal__section">
+                    <h3 class="modal__section-title">TWIN.Massage</h3>
+                    <p class="modal__text">Позволяет рассылать миллионы сообщений клиентам по разным каналам — от мессенджерах до соцсетей и СМС.</p>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Возможности платформы</h3>
+                    <ul class="modal__list">
+                        <li class="modal__list-item">Массовые рассылки по всем каналам связи</li>
+                        <li class="modal__list-item">Персонализация контента для каждого клиента</li>
+                        <li class="modal__list-item">Детальная аналитика эффективности кампаний</li>
+                        <li class="modal__list-item">Автоматическое сегментирование аудитории</li>
+                        <li class="modal__list-item">Планирование и автоматизация рассылок</li>
+                    </ul>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Поддерживаемые каналы</h3>
+                    <div class="modal__highlight">
+                        <p class="modal__text">Мессенджеры: WhatsApp, Telegram, Viber</p>
+                        <p class="modal__text">Социальные сети: ВКонтакте, Instagram, Facebook</p>
+                        <p class="modal__text">SMS-рассылки</p>
+                        <p class="modal__text">Email-рассылки</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для Виджета для сайта -->
+    <div class="modal" id="site-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2 class="modal__title">Виджет для сайта</h2>
+                <button class="modal__close">&times;</button>
+            </div>
+            <div class="modal__body">
+                <div class="modal__section">
+                    <h3 class="modal__section-title">TWIN.Site</h3>
+                    <p class="modal__text">Осуществляет общение оператора или бота с посетителями сайта через онлайн-чат или любые мессенджеры. Возможно использование ИИ.</p>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Основные функции</h3>
+                    <ul class="modal__list">
+                        <li class="modal__list-item">Онлайн-чат для сайта с поддержкой ИИ</li>
+                        <li class="modal__list-item">Интеграция с популярными мессенджерами</li>
+                        <li class="modal__list-item">Автоматическое переключение на оператора</li>
+                        <li class="modal__list-item">Сбор контактных данных посетителей</li>
+                        <li class="modal__list-item">Аналитика поведения пользователей</li>
+                    </ul>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Преимущества</h3>
+                    <div class="modal__highlight">
+                        <p class="modal__text">Повышение конверсии за счет мгновенной реакции на запросы посетителей</p>
+                        <p class="modal__text">Снижение нагрузки на операторов благодаря автоматизации типовых вопросов</p>
+                        <p class="modal__text">Круглосуточная поддержка клиентов без увеличения штата</p>
+                        <p class="modal__text">Интеграция с CRM для автоматического создания лидов</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для контактов -->
+    <div class="modal" id="contact-modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2 class="modal__title">Контактная информация</h2>
+                <button class="modal__close">&times;</button>
+            </div>
+            <div class="modal__body">
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Свяжитесь с нами</h3>
+                    <p class="modal__text">Мы всегда рады ответить на ваши вопросы и помочь с выбором подходящего решения для автоматизации вашего бизнеса.</p>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Контактные данные</h3>
+                    <ul class="modal__list">
+                        <li class="modal__list-item"><strong>Email:</strong> sasha2kms@mail.ru</li>
+                        <li class="modal__list-item"><strong>Телефон:</strong> 8-918 650 07 96</li>
+                        <li class="modal__list-item"><strong>Адрес:</strong> г. Краснодар, ул Криничная 173</li>
+                        <li class="modal__list-item"><strong>Режим работы:</strong> Пн-Пт: 9:00-18:00</li>
+                    </ul>
+                </div>
+                
+                <div class="modal__section">
+                    <h3 class="modal__section-title">Мы в социальных сетях</h3>
+                    <div class="modal__highlight">
+                        <p class="modal__text">Подписывайтесь на наши социальные сети, чтобы быть в курсе новостей и специальных предложений:</p>
+                        <p class="modal__text"><i class="fab fa-whatsapp"></i> WhatsApp: 8-918 650 07 96</p>
+                        <p class="modal__text"><i class="fab fa-telegram"></i> Telegram: @autocom_krd</p>
+                        <p class="modal__text"><i class="fab fa-vk"></i> ВКонтакте: vk.com/autocom_krd</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Плавная прокрутка к якорям
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Анимация появления элементов при скролле
+        const fadeElements = document.querySelectorAll('.fade-in');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Обработка формы
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Спасибо за ваше сообщение! Мы свяжемся с вами в ближайшее время.');
+            this.reset();
+        });
+
+        // Анимация кнопки в шапке
+        const headerButton = document.querySelector('.header__button');
+        headerButton.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+        headerButton.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+        });
+
+        // Управление модальными окнами
+        const modals = document.querySelectorAll('.modal');
+        const modalTriggers = document.querySelectorAll('[data-modal], #hero-modal-btn');
+        const modalCloseButtons = document.querySelectorAll('.modal__close');
+
+        // Функция открытия модального окна
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Блокируем скролл страницы
+            }
+        }
+
+        // Функция закрытия модального окна
+        function closeModal() {
+            modals.forEach(modal => {
+                modal.classList.remove('active');
+            });
+            document.body.style.overflow = ''; // Восстанавливаем скролл страницы
+        }
+
+        // Обработчики для открытия модальных окон
+        modalTriggers.forEach(trigger => {
+            trigger.addEventListener('click', function() {
+                let modalId;
+                
+                if (this.id === 'hero-modal-btn') {
+                    modalId = 'hero-modal';
+                } else {
+                    modalId = this.getAttribute('data-modal') + '-modal';
+                }
+                
+                openModal(modalId);
+            });
+        });
+
+        // Обработчики для закрытия модальных окон
+        modalCloseButtons.forEach(button => {
+            button.addEventListener('click', closeModal);
+        });
+
+        // Закрытие модального окна при клике вне его содержимого
+        modals.forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+        });
+
+        // Закрытие модального окна при нажатии Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Обработчики для контактов в футере
+        document.querySelectorAll('.footer__link[data-modal="email"], .footer__link[data-modal="phone"], .footer__link[data-modal="address"]').forEach(link => {
+            link.addEventListener('click', function() {
+                openModal('contact-modal');
+            });
+        });
+
+        document.querySelectorAll('.footer__social-link').forEach(link => {
+            link.addEventListener('click', function() {
+                openModal('contact-modal');
+            });
+        });
+    </script>
+</body>
+</html>
